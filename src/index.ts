@@ -37,6 +37,8 @@ interface Losses {
   };
 }
 
+const fontfile = 'node_modules/@fontsource/jetbrains-mono/files/jetbrains-mono-cyrillic-400-normal.woff';
+
 const course: Courses = (await fetch('https://www.cbr-xml-daily.ru/daily_json.js').then(f =>
   f.json()
 )) as Courses;
@@ -60,17 +62,17 @@ const img = await sharp({
   .composite([
     { input: './resources/munk-o.png', left: 250 - 145, top: 0 },
     {
-      input: { text: { text: `$${course.Valute.USD.Value}`, rgba: true, dpi: 150 } },
+      input: { text: { text: `$${course.Valute.USD.Value}`, rgba: true, dpi: 150, fontfile } },
       top: 0,
       left: 0,
     },
     {
-      input: { text: { text: `€${course.Valute.EUR.Value}`, rgba: true, dpi: 150 } },
+      input: { text: { text: `€${course.Valute.EUR.Value}`, rgba: true, dpi: 150, fontfile } },
       top: 35,
       left: 0,
     },
     {
-      input: { text: { text: `💀${losses.data[today].personnel}`, rgba: true, dpi: 150 } },
+      input: { text: { text: `💀${losses.data[today].personnel}`, rgba: true, dpi: 150, fontfile } },
       top: 60,
       left: 0,
     },

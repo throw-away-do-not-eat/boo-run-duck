@@ -13,6 +13,7 @@
   "author": "throwaway",
   "license": "Unlicense",
   "dependencies": {
+    "@fontsource/jetbrains-mono": "^5.0.12",
     "node-fetch": "^3.3.2",
     "sharp": "^0.32.6",
     "ts-node": "^10.9.1",
