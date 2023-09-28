@@ -62,20 +62,20 @@ const img = await sharp({
   .composite([
     { input: './resources/munk-o.png', left: 250 - 145, top: 0 },
     {
-      input: { text: { text: `$${course.Valute.USD.Value}`, rgba: true, dpi: 150, fontfile } },
+      input: { text: { text: `$${course.Valute.USD.Value}\n€${course.Valute.EUR.Value}\n†${losses.data[today].personnel}`, rgba: true, dpi: 150, fontfile } },
       top: 0,
       left: 0,
     },
-    {
-      input: { text: { text: `€${course.Valute.EUR.Value}`, rgba: true, dpi: 150, fontfile } },
-      top: 35,
-      left: 0,
-    },
-    {
-      input: { text: { text: `💀${losses.data[today].personnel}`, rgba: true, dpi: 150, fontfile } },
-      top: 60,
-      left: 0,
-    },
+    // {
+    //   input: { text: { text: `€${course.Valute.EUR.Value}`, rgba: true, dpi: 150, fontfile } },
+    //   top: 35,
+    //   left: 0,
+    // },
+    // {
+    //   input: { text: { text: `💀${losses.data[today].personnel}`, rgba: true, dpi: 150, fontfile } },
+    //   top: 60,
+    //   left: 0,
+    // },
   ])
   .webp()
   .toFile('./dist/black_munk.webp');
