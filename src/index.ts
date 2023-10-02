@@ -59,15 +59,15 @@ try {
   if ((err as any).code !== 'EEXIST') throw err;
   console.log('dist exists');
 }
-const text = `$${course.Valute.USD.Value} ${trendString(course.Valute.USD.Previous, course.Valute.USD.Value)}
-€${course.Valute.EUR.Value} ${trendString(course.Valute.EUR.Previous, course.Valute.EUR.Value)}
-†${losses.data[today].personnel} ${trendString(losses.data[yesterday].personnel, losses.data[today].personnel)}
+const text = `$${course.Valute.USD.Value}${trendString(course.Valute.USD.Previous, course.Valute.USD.Value)}
+€${course.Valute.EUR.Value}${trendString(course.Valute.EUR.Previous, course.Valute.EUR.Value)}
+†${losses.data[today].personnel}${trendString(losses.data[yesterday].personnel, losses.data[today].personnel)}
 `;
 const img = await sharp({
-  create: { height: 334, width: 250, background: { r: 0, g: 0, b: 0, alpha: 0 }, channels: 4 },
+  create: { height: 334, width: 275, background: { r: 0, g: 0, b: 0, alpha: 0 }, channels: 4 },
 })
   .composite([
-    { input: './resources/munk-o.png', left: 250 - 145, top: 0 },
+    { input: './resources/munk-o.png', left: 275 - 145, top: 0 },
     {
       input: { text: { text, rgba: true, dpi: 150, fontfile } },
       top: 0,
