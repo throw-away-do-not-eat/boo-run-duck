@@ -38,7 +38,7 @@ interface Losses {
 }
 
 function trendString(prev: number, next: number) {
-  return next > prev ? '<span color='green'>↗</span>' : '<span color='red'>↘</span>'
+  return next > prev ? `<span color='green'>↗</span>` : `<span color='red'>↘</span>`
 }
 
 const fontfile = 'node_modules/@fontsource/jetbrains-mono/files/jetbrains-mono-cyrillic-400-normal.woff';
