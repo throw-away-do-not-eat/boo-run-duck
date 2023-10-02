@@ -37,6 +37,10 @@ interface Losses {
   };
 }
 
+function trendString(prev: number, next: number) {
+  return next > prev ? '<span color='green'>↗</span>' : '<span color='red'>↘</span>'
+}
+
 const fontfile = 'node_modules/@fontsource/jetbrains-mono/files/jetbrains-mono-cyrillic-400-normal.woff';
 
 const course: Courses = (await fetch('https://www.cbr-xml-daily.ru/daily_json.js').then(f =>
@@ -47,8 +51,7 @@ const losses: Losses = (await fetch('https://russian-casualties.in.ua/api/v1/dat
   f => f.json()
 )) as Losses;
 
-const [today] = Object.keys(losses.data).sort((a, b) => b.localeCompare(a));
-console.log(today);
+const [today, yesterday] = Object.keys(losses.data).sort((a, b) => b.localeCompare(a));
 
 try {
   await fs.mkdir('dist');
@@ -56,26 +59,20 @@ try {
   if ((err as any).code !== 'EEXIST') throw err;
   console.log('dist exists');
 }
+const text = `$${course.Valute.USD.Value} ${trendString(course.Valute.USD.Previous, course.Valute.USD.Value)}
+€${course.Valute.EUR.Value} ${trendString(course.Valute.EUR.Previous, course.Valute.EUR.Value)}
+†${losses.data[today].personnel} ${trendString(losses.data[yesterday].personnel, losses.data[today].personnel)}
+`;
 const img = await sharp({
   create: { height: 334, width: 250, background: { r: 0, g: 0, b: 0, alpha: 0 }, channels: 4 },
 })
   .composite([
     { input: './resources/munk-o.png', left: 250 - 145, top: 0 },
     {
-      input: { text: { text: `$${course.Valute.USD.Value}\n€${course.Valute.EUR.Value}\n†${losses.data[today].personnel}`, rgba: true, dpi: 150, fontfile } },
+      input: { text: { text, rgba: true, dpi: 150, fontfile } },
       top: 0,
       left: 0,
     },
-    // {
-    //   input: { text: { text: `€${course.Valute.EUR.Value}`, rgba: true, dpi: 150, fontfile } },
-    //   top: 35,
-    //   left: 0,
-    // },
-    // {
-    //   input: { text: { text: `💀${losses.data[today].personnel}`, rgba: true, dpi: 150, fontfile } },
-    //   top: 60,
-    //   left: 0,
-    // },
   ])
   .webp()
   .toFile('./dist/black_munk.webp');
