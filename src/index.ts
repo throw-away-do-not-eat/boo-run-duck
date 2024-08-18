@@ -43,6 +43,10 @@ function trendString(prev: number, next: number) {
 
 const fontfile = 'node_modules/@fontsource/jetbrains-mono/files/jetbrains-mono-cyrillic-400-normal.woff';
 
+const course: Courses = (await fetch('https://www.cbr-xml-daily.ru/daily_json.js').then(f =>
+  f.json()
+)) as Courses;
+
 const losses: Losses = (await fetch('https://russian-casualties.in.ua/api/v1/data/json/daily').then(
   f => f.json()
 )) as Losses;
@@ -55,8 +59,8 @@ try {
   if ((err as any).code !== 'EEXIST') throw err;
   console.log('dist exists');
 }
-const text = `$???
-€???
+const text = `$${course.Valute.USD.Value}${trendString(course.Valute.USD.Previous, course.Valute.USD.Value)}
+€${course.Valute.EUR.Value}${trendString(course.Valute.EUR.Previous, course.Valute.EUR.Value)}
 †${losses.data[today].personnel}${trendString(losses.data[yesterday].personnel, losses.data[today].personnel)}
 `;
 const img = await sharp({
