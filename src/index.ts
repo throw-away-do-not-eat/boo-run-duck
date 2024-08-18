@@ -55,7 +55,7 @@ try {
 }
 const text = `$${course.Valute.USD.Value}${trendString(course.Valute.USD.Previous, course.Valute.USD.Value)}
 €${course.Valute.EUR.Value}${trendString(course.Valute.EUR.Previous, course.Valute.EUR.Value)}
-†???}
+†???
 `;
 const img = await sharp({
   create: { height: 334, width: 275, background: { r: 0, g: 0, b: 0, alpha: 0 }, channels: 4 },
