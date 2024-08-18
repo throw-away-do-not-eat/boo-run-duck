@@ -47,12 +47,6 @@ const course: Courses = (await fetch('https://www.cbr-xml-daily.ru/daily_json.js
   f.json()
 )) as Courses;
 
-const losses: Losses = (await fetch('https://russian-casualties.in.ua/api/v1/data/json/daily').then(
-  f => f.json()
-)) as Losses;
-
-const [today, yesterday] = Object.keys(losses.data).sort((a, b) => b.localeCompare(a));
-
 try {
   await fs.mkdir('dist');
 } catch (err: unknown) {
@@ -61,7 +55,7 @@ try {
 }
 const text = `$${course.Valute.USD.Value}${trendString(course.Valute.USD.Previous, course.Valute.USD.Value)}
 €${course.Valute.EUR.Value}${trendString(course.Valute.EUR.Previous, course.Valute.EUR.Value)}
-†${losses.data[today].personnel}${trendString(losses.data[yesterday].personnel, losses.data[today].personnel)}
+†???}
 `;
 const img = await sharp({
   create: { height: 334, width: 275, background: { r: 0, g: 0, b: 0, alpha: 0 }, channels: 4 },
